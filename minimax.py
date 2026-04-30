@@ -375,6 +375,50 @@ def prueba_compleja_manual(tablero, posicion_raton, posicion_gato, cueva):
 
 
 
+# Funcion : JUEGO CON JUGADOR MANUAL Y BOT
+
+
+def prueba_compleja_manual_con_bot(tablero, posicion_raton, posicion_gato, cueva):
+
+    turno = 0
+    while True:
+        # Contador de turnos
+        print(f"Turno:{turno + 1}")
+        turno += 1
+        
+        # El ratón se mueve manualmente (jugador humano)
+        posicion_raton = jugador_manual(tablero, posicion_raton, "🐭")
+        
+        # El gato se mueve con la IA (bot)
+        posicion_gato  = mover_jugador_ia(tablero, posicion_gato, posicion_raton, cueva, True, diccionario_movimientos)
+
+        # Se limpia e imprime el tablero, y se genera un pequeño retardo en cada ciclo
+        limpiar_la_consola( )
+        imprimir_tablero(tablero)
+        time.sleep(0.2)
+
+        if posicion_raton == cueva:
+            print("EL RATON LOGRO ESCAPAR DEL GATO VICTORIA")
+            break
+        elif posicion_raton == posicion_gato:
+            print("EL GATO ATRAPO AL RATON PERDISTE")
+            break
+
+
+#---------------------------------------------
+# IMPRESION DEL TABLERO DE JUEGO
+#---------------------------------------------
+
+def imprimir_tablero(tablero):
+    for fila in tablero: # Recorre cada fila
+        print(" ".join(fila))   # Une los elementos de la lista de "filas"
+                                # Creando un solo string
+                                # con espacios entre ellos y los imprime
+                                # Ej: [".", ".", "R", "."] a "". . R .
+    print( ) #Separador
+
+
+
 if __name__ == "__main__":
 
     # Bienvenida
@@ -520,4 +564,6 @@ if __name__ == "__main__":
 
     #prueba_compleja(tablero, posicion_raton, posicion_gato, cueva)
 
-    prueba_compleja_manual(tablero, posicion_raton, posicion_gato, cueva)
+    #prueba_compleja_manual(tablero, posicion_raton, posicion_gato, cueva)
+
+    prueba_compleja_manual_con_bot(tablero, posicion_raton, posicion_gato, cueva)
