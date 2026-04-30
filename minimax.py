@@ -1,30 +1,27 @@
+# ==================================================
 # IMPORTACIONES DE LIBRERIAS
+# ==================================================
+
 import random # Libreria basica de python para generar numeros aleatorios con un algoritmo
 import os     # Nos permite interactuar con el sistema operativo, gestionar archivos, carpetas y "ejecutar comandos del sistema" (que sera su principal uso en este programa)
 import time   # Nos permite trabajar con tiempo: fechas, horas, medir cuánto tarda algo, o simplemente "hacer pausas" (que sera su uso principal)
 
-#---------------------------------------------------
+
+# ---------------------------------------------
+# ---------------------------------------------
+# ---------------------------------------------
 
 # FUNCIONES PARA QUE EL PROGRAMA FUNCIONE
 
-#---------------------------------------------------
+# ---------------------------------------------
+# ---------------------------------------------
+# ---------------------------------------------
 
 
-
-# Funcion 1: LIMPIAR CONSOLA
-
-def limpiar_la_consola(): #Vamos a usar esta funcion para darle un toque estetico al juego mejor en la consola y que se pueda apreciar mejor
-    # "os.system" nos permite interactuar con el sistema, osea poner codigo dentro del programa que se ejecute en la consola junto al programa
-    os.system("cls")
-            #DATOS:
-                # "system" le dice al sistema operativo "ejecuta esto:"
-                # "clear" limpia la consola
-
-
-
-#---------------------------------------------
+# Funcion 1:
+# ---------------------------------------------
 # IMPRESION DEL TABLERO DE JUEGO
-#---------------------------------------------
+# ---------------------------------------------
 
 def imprimir_tablero(tablero):
     for fila in tablero: # Recorre cada fila
@@ -36,8 +33,23 @@ def imprimir_tablero(tablero):
 
 
 
-# Funcion : GENERACION DE MOVIMIENTOS RANDOMS PARA LOS JUGADORES
+# Funcion 2:
+# ---------------------------
+# LIMPIAR CONSOLA
+# ---------------------------
 
+def limpiar_la_consola(): #Vamos a usar esta funcion para darle un toque estetico al juego mejor en la consola y que se pueda apreciar mejor
+    # "os.system" nos permite interactuar con el sistema, osea poner codigo dentro del programa que se ejecute en la consola junto al programa
+    os.system("cls")
+            #DATOS:
+                # "system" le dice al sistema operativo "ejecuta esto:"
+                # "clear" limpia la consola
+
+
+# Funcion 3:
+# ---------------------------------------------------
+# GENERACION DE MOVIMIENTOS RANDOMS PARA LOS JUGADORES
+# ---------------------------------------------------
 
 def nuevo_movimiento(tablero, posicion, simbolo, movimientos):
 
@@ -66,10 +78,10 @@ def nuevo_movimiento(tablero, posicion, simbolo, movimientos):
     # Retorna ese valor
     return (nueva_fila, nueva_columna)
 
-
-
-# Funcion: EVALUAR ESTADO DEL JUEGO Y SU VALOR
-
+# Funcion 4:
+# ---------------------------------------------
+# EVALUAR ESTADO DEL JUEGO Y SU VALOR
+# ---------------------------------------------
 
 # Esta función evalúa qué tan buena o mala es una posición del juego para el ratón
 def evaluar_estado_simple(posicion_raton, posicion_gato, cueva):
@@ -98,10 +110,10 @@ def evaluar_estado_simple(posicion_raton, posicion_gato, cueva):
     
     return valor
 
-
-
-# Funcion : MINIMAX
-
+# Funcion 5:
+# --------------
+# MINIMAX
+# --------------
 
 def minimax_simple(posicion_raton, posicion_gato, cueva, profundidad, es_turno_del_gato, diccionario_movimientos, tablero):
     """
@@ -160,10 +172,10 @@ def minimax_simple(posicion_raton, posicion_gato, cueva, profundidad, es_turno_d
                 mejor_valor = max(mejor_valor, valor)
         return mejor_valor
 
-
-
-# Funcion : BOT DE PERSONAJE
-
+# Funcion 6:
+# ---------------------------------------------
+# MOVIMIENTOS DE PERSONAJE INTELIGENTES
+# ---------------------------------------------
 
 def mover_jugador_ia(tablero, posicion_jugador, posicion_oponente, cueva, es_gato, diccionario_movimientos):
     """
@@ -218,10 +230,10 @@ def mover_jugador_ia(tablero, posicion_jugador, posicion_oponente, cueva, es_gat
     return mejor_movimiento
 
 
-
-
-# Funcion : INICIA EL JUEGO CON LOS PERSONAJES SIENDO BOTS INTELIGENTES CON MINIMAX
-
+# Funcion 7:
+# ------------------------------------------------
+# INICIA EL JUEGO CON LOS PERSONAJES SIENDO BOTS
+# ------------------------------------------------
 
 # Dentro de tu función de bucle de juego:
 def prueba_con_ia(tablero, posicion_raton, posicion_gato, cueva, diccionario_movimientos):
@@ -252,8 +264,10 @@ def prueba_con_ia(tablero, posicion_raton, posicion_gato, cueva, diccionario_mov
 
 
 
-# Funcion : SIMULACION INFINITA DE TURNOS CON MOVIMIENTOS ALEATORIOS
-
+# Funcion 8:
+# ----------------------------------------------------------
+# SIMULACION INFINITA DE TURNOS CON MOVIMIENTOS ALEATORIOS
+# ----------------------------------------------------------
 
 def prueba_compleja(tablero, posicion_raton, posicion_gato, cueva):
 
@@ -282,9 +296,10 @@ def prueba_compleja(tablero, posicion_raton, posicion_gato, cueva):
             break
 
 
-
-# Funcion : FUNCION PARA CONTROLAR MANUALMENTE A UN JUGADOR
-
+# Funcion 9:
+# ---------------------------------------------------
+# FUNCION PARA CONTROLAR MANUALMENTE A UN JUGADOR
+# ---------------------------------------------------
 
 def jugador_manual(tablero, posicion, simbolo):
 
@@ -345,8 +360,10 @@ def jugador_manual(tablero, posicion, simbolo):
     return (nueva_fila, nueva_columna) # Devolvemos la nueva posicion
 
 
-
-# Funcion : JUEGO CON JUGADOR MANUAL
+# Funcion 10:
+# ---------------------------------------------------
+# JUEGO CON JUGADOR MANUAL Y RANDOMS
+# ---------------------------------------------------
 
 def prueba_compleja_manual(tablero, posicion_raton, posicion_gato, cueva):
 
@@ -374,9 +391,10 @@ def prueba_compleja_manual(tablero, posicion_raton, posicion_gato, cueva):
             break
 
 
-
-# Funcion : JUEGO CON JUGADOR MANUAL Y BOT
-
+# Funcion 11:
+# ---------------------------------------------------
+# JUEGO CON JUGADOR MANUAL Y BOT
+# ---------------------------------------------------
 
 def prueba_compleja_manual_con_bot(tablero, posicion_raton, posicion_gato, cueva):
 
@@ -405,28 +423,33 @@ def prueba_compleja_manual_con_bot(tablero, posicion_raton, posicion_gato, cueva
             break
 
 
-#---------------------------------------------
-# IMPRESION DEL TABLERO DE JUEGO
-#---------------------------------------------
 
-def imprimir_tablero(tablero):
-    for fila in tablero: # Recorre cada fila
-        print(" ".join(fila))   # Une los elementos de la lista de "filas"
-                                # Creando un solo string
-                                # con espacios entre ellos y los imprime
-                                # Ej: [".", ".", "R", "."] a "". . R .
-    print( ) #Separador
 
+
+
+# ---------------------------------------------
+# BLOQUE PRINCIPAL DE INICIALIZACION DEL JUEGO
+# ---------------------------------------------
+
+# Hace que el codigo sea reutilizable
+# Mejora la estetica del codigo
+# Separa las logicas del juego
+# Evita posibles problemas como ejecuciones accidentales
 
 
 if __name__ == "__main__":
 
-    # Bienvenida
+    # ------------------
+    # BIENVENIDA
+    # ------------------
 
     print("Bienvenido al loco juego del gato y el raton")
     print() # Genera un espacio entre los textos   
 
+    
+    # -----------------------------------
     # CREACION DEL TABLERO DE JUEGO
+    # -----------------------------------
 
     # TAMANHO DEL TABLERO
     while True: # Bluque para solicitar el tamanho del tablero
@@ -441,21 +464,25 @@ if __name__ == "__main__":
         print("El tablero debe ser de minimo 10x10")
 
 
-
-    # CREACION DEL TABLERO
+    # ---------------------------------------------
+    # CREACION DEL TABLERO VACIO
+    # ---------------------------------------------
                 #Creacion de columnas y filas del tablero (Divido en 2 partes Interna/Externa)
     tablero = [["." for _ in range(columnas)] for _ in range(filas)]
                 #Datos:   
-                    # Parte interna (primer corchete): ( Esta parte crea las Columnas Verticales)
+                        # Parte interna (primer corchete): ( Esta parte crea las Columnas Verticales)
                     # _ Es una convencion que significa: "No me importa el valor de la variable solo quiero repetir algo"
                     # ["." for in range(columnas)] Genera una lista de "." repetido tantas veces como columnas hayamos indicado para el tablero
-                    # Parte externa (Segundo corchete): ( Esta parte crea las Filas del tablero (La linea horizontal))
+                        
+                        # Parte externa (Segundo corchete): ( Esta parte crea las Filas del tablero (La linea horizontal))
                     # [for _ in range (filas)] “Haz tantas filas (Replicando la lista de columnas) como numero de filas le hayas indicado al tablero”.
 
 
-
+    # -----------------------------
     # CREACION DE MUROS Y PAREDES
+    # -----------------------------
 
+    # MUROS/BORDES/LIMITES
         # Coloca muros "#" en la fila superior e inferior
     for columna in range(columnas):
             #  ( Y; X )
@@ -466,18 +493,19 @@ if __name__ == "__main__":
     for fila in range(filas):
         #      ( Y  ; X )
         tablero[fila][0]            = "#"
-        tablero[fila][columnas - 1] = "#" 
+        tablero[fila][columnas - 1] = "#"
 
 
-
+    # ------------------------------------------
     # MENU DE LAS POSICIONES DE LOS JUGADORES
+    # ------------------------------------------
 
     print("\nElige las posiciones del Gato 🐱 y al Ratón 🐭:")
     print("1. Raton en esquina y Gato en el centro")
     print("2. Raton en esquina y Gato en esquina opuesta")
     print("3. Posiciones aleatorias")
 
-    posiciones_jugadores = int(input("Opcion: ")) # Tomamos la opcion que eligio el usuario
+    posiciones_jugadores = int(input("Opcion: "))
 
 
     # 1 Posiciones: Esquina y centro (pacman)
@@ -529,7 +557,9 @@ if __name__ == "__main__":
         tablero[cueva[0]][cueva[1]] = "🏠"
 
 
+    # ---------------------------------------------------
     # INTRODUCION DEL GATO Y RATON AL TABLERO
+    # ---------------------------------------------------
 
             # Fila Y            # Columna X
     tablero[posicion_raton[0]] [posicion_raton[1]] = "🐭"
@@ -537,14 +567,9 @@ if __name__ == "__main__":
     # Reemplazan la celda vacia (representada con ".") con el simbolo del jugador
 
 
-    # INICIO DEL JUEGO
-
-    print("TABLERO INICIAL")
-    imprimir_tablero(tablero) # Llamamos/Inciamos la funcion para mostrar el tablero en la consola
-
-
-
+    # ---------------------------------------------------
     # MOVIMIENTOS DE LOS JUGADORES
+    # ---------------------------------------------------
 
     # Diccionario Delta con los movimientos de los jugadores (Delta = cambio/diferencia)
     diccionario_movimientos = {
@@ -560,10 +585,30 @@ if __name__ == "__main__":
 
     }
 
+    # ------------------------
+    # INICIO DEL JUEGO
+    # ------------------------
+
+    print("TABLERO INICIAL")
+    imprimir_tablero(tablero) # Llamamos/Inciamos la funcion para mostrar el tablero en la consola
+
+
+    # ----------------------------------------------------
+    # LLAMADOS A LAS FUNCIONES PARA QUE FUNCIONEN
+    # ----------------------------------------------------
+    # Al irlas ejecutando en este orden podremos ver la evolucion de la capacidad de movimiento o inteligencia de los personajes
+    # Desde que sean completamente tontos (aleatorios) hasta inteligentes (minimax) y permitiendonos poder controlarlos tambien de forma manual
+
+    #-1:
+    # Llama a esta función para empezar el juego
     #prueba_con_ia(tablero, posicion_raton, posicion_gato, cueva, diccionario_movimientos)
 
-    #prueba_compleja(tablero, posicion_raton, posicion_gato, cueva)
-
+    #-2:
     #prueba_compleja_manual(tablero, posicion_raton, posicion_gato, cueva)
 
-    prueba_compleja_manual_con_bot(tablero, posicion_raton, posicion_gato, cueva)
+    #-3:
+    prueba_compleja(tablero, posicion_raton, posicion_gato, cueva)
+
+    #-4:
+    #prueba_compleja_manual_con_bot(tablero, posicion_raton, posicion_gato, cueva)
+
