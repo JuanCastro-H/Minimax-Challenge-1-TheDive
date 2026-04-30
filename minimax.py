@@ -1,6 +1,14 @@
 # IMPORTACIONES DE LIBRERIAS
 import random # Libreria basica de python para generar numeros aleatorios con un algoritmo
 
+
+#---------------------------------------------------
+
+# FUNCIONES PARA QUE EL PROGRAMA FUNCIONE
+
+#---------------------------------------------------
+
+
 #---------------------------------------------
 # IMPRESION DEL TABLERO DE JUEGO
 #---------------------------------------------
@@ -44,6 +52,100 @@ def nuevo_movimiento(tablero, posicion, simbolo, movimientos):
 
     # Retorna ese valor
     return (nueva_fila, nueva_columna)
+
+
+
+# Funcion: EVALUAR ESTADO DEL JUEGO Y SU VALOR
+
+
+# Esta función evalúa qué tan buena o mala es una posición del juego para el ratón
+def evaluar_estado_simple(posicion_raton, posicion_gato, cueva):
+    """
+    Evalúa el estado del juego con una lógica simple.
+    Un valor más alto es mejor para el ratón (Maximizador).
+    """
+    # Si el ratón escapa, es la victoria máxima.
+    if posicion_raton == cueva:
+        return 10000  # Valor muy alto
+
+    # Si el gato atrapa al ratón, es la derrota máxima.
+    if posicion_raton == posicion_gato:
+        return -10000 # Valor muy bajo
+
+    # Qué tan lejos está el ratón de la cueva (MALO para el ratón))
+    distancia_cueva = abs(posicion_raton[0] - cueva[0]) + abs(posicion_raton[1] - cueva[1])
+    
+    # Qué tan lejos está el gato del ratón (BUENO para el ratón)
+    distancia_gato = abs(posicion_raton[0] - posicion_gato[0]) + abs(posicion_raton[1] - posicion_gato[1])
+    
+    # El valor es la distancia que el ratón tiene que huir del gato,
+    # menos la distancia que le falta para llegar a la cueva.
+    # El ratón quiere que este valor sea lo más grande posible.
+    valor = distancia_gato - distancia_cueva
+    
+    return valor
+
+
+
+# Funcion 4: MINIMAX
+
+
+def minimax_simple(posicion_raton, posicion_gato, cueva, profundidad, es_turno_del_gato, diccionario_movimientos, tablero):
+    """
+    Algoritmo Minimax recursivo y simple.
+    - `profundidad`: Cuántos turnos mira hacia adelante.
+    - `es_turno_del_gato`: True si es el turno del gato, False si es del ratón.
+    """
+
+    # Se acabaron los turnos a simular (profundidad == 0) El juego terminó (ratón escapó o fue capturado)
+    if profundidad == 0 or posicion_raton == cueva or posicion_raton == posicion_gato:
+        return evaluar_estado_simple(posicion_raton, posicion_gato, cueva) # Retorna la puntuaacion de esa posicion
+
+    # Si es el turno del GATO (Minimizador)
+    if es_turno_del_gato:
+        # infinito +
+        mejor_valor = float('inf')  # El gato busca el valor más bajo
+        for movimiento in diccionario_movimientos.values():
+            # calcula la nueva posicion
+            nueva_posicion_gato = (posicion_gato[0] + movimiento[0], posicion_gato[1] + movimiento[1])
+
+            # Solo consideramos movimientos válidos para el GATO
+            # Se puede mover a un espacio vacío, al ratón (captura), o a la cueva.
+            if tablero[nueva_posicion_gato[0]][nueva_posicion_gato[1]] != "#":
+                
+                # Simular el movimiento del gato
+                if nueva_posicion_gato == posicion_raton:
+                    # Si el gato atrapa al ratón, es una victoria para el gato.
+                    valor = -1000
+                else:
+                    # Llamada recursiva: el siguiente turno es del ratón
+                    valor = minimax_simple(posicion_raton, nueva_posicion_gato, cueva, profundidad - 1, False, diccionario_movimientos, tablero)
+                
+                mejor_valor = min(mejor_valor, valor)
+
+        return mejor_valor
+
+    # Si es el turno del RATÓN (Maximizador)
+    else:
+        # infinito -
+        mejor_valor = float('-inf') # El ratón busca el valor más alto
+        for movimiento in diccionario_movimientos.values():
+            nueva_posicion_raton = (posicion_raton[0] + movimiento[0], posicion_raton[1] + movimiento[1])
+            
+            # Solo consideramos movimientos válidos para el RATÓN
+            # El ratón solo puede moverse a una posición vacía o a la cueva, pero no a la posición del gato.
+            if tablero[nueva_posicion_raton[0]][nueva_posicion_raton[1]] != "#" and nueva_posicion_raton != posicion_gato:
+
+                # Simular el movimiento del ratón
+                if nueva_posicion_raton == cueva:
+                    # Si el ratón llega a la cueva, es una victoria para el ratón.
+                    valor = 1000
+                else:
+                    # Llamada recursiva: el siguiente turno es del gato
+                    valor = minimax_simple(nueva_posicion_raton, posicion_gato, cueva, profundidad - 1, True, diccionario_movimientos, tablero)
+                
+                mejor_valor = max(mejor_valor, valor)
+        return mejor_valor
 
 
 
