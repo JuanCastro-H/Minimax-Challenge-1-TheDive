@@ -346,6 +346,35 @@ def jugador_manual(tablero, posicion, simbolo):
 
 
 
+# Funcion : JUEGO CON JUGADOR MANUAL
+
+def prueba_compleja_manual(tablero, posicion_raton, posicion_gato, cueva):
+
+    turno = 0
+    while True:
+        # Contador de turnos
+        print(f"Turno:{turno + 1}")
+        turno +=  1
+        
+        # Se generan las posiciones de los jugadores, con la diferencia de que puedes controlar a uno de los jugadores, al llamar  ala funcion jugador_manual
+        posicion_raton = jugador_manual(tablero, posicion_raton, "🐭",)
+        posicion_gato  = nuevo_movimiento(tablero, posicion_gato , "🐱", diccionario_movimientos )
+
+        # Se limpia e imprime el tablero, y se genera un pequeño retardo en cada ciclo
+        limpiar_la_consola()
+        imprimir_tablero(tablero)
+        time.sleep(0.2)
+
+        # Condiciones de VICTORIA/DERROTA
+        if posicion_raton == cueva:
+            print("EL RATON LOGRO ESCAPAR DEL GATO VICTORIA")
+            break
+        elif posicion_raton == posicion_gato:
+            print("EL GATO ATRAPO AL RATON PERDISTE")
+            break
+
+
+
 if __name__ == "__main__":
 
     # Bienvenida
@@ -489,4 +518,6 @@ if __name__ == "__main__":
 
     #prueba_con_ia(tablero, posicion_raton, posicion_gato, cueva, diccionario_movimientos)
 
-    prueba_compleja(tablero, posicion_raton, posicion_gato, cueva)
+    #prueba_compleja(tablero, posicion_raton, posicion_gato, cueva)
+
+    prueba_compleja_manual(tablero, posicion_raton, posicion_gato, cueva)
