@@ -14,6 +14,39 @@ def imprimir_tablero(tablero):
     print( ) #Separador
 
 
+
+# Funcion : GENERACION DE MOVIMIENTOS RANDOMS PARA LOS JUGADORES
+
+
+def nuevo_movimiento(tablero, posicion, simbolo, movimientos):
+
+    while True: # Bucle infinito de busqueda de un movimiento randoms valido
+        direccion = random.choice(list(movimientos.values() )) # Toma una direccion randoms
+
+        # Nuevo movimiento
+        nueva_fila    = posicion[0] + direccion[0]
+        nueva_columna = posicion[1] + direccion[1]
+        
+        # pone el simbolo en el tablero para analizarlo
+        simbolo_en_destino = tablero[nueva_fila][nueva_columna]
+
+        # REGLA CLAVE: Un movimiento es válido si el destino no es un muro.
+        # Las reglas de captura/escape se manejan en el bucle principal.
+        if simbolo_en_destino != "#":
+            # REGLA EXTRA: El ratón no puede ir a la casilla del gato.
+            if simbolo == "🐭" and simbolo_en_destino == "🐱":
+                continue # Vuelve a intentarlo, este movimiento no es válido para el ratón.
+            break
+
+    # Actualizacion del tablero
+    tablero[posicion[0]][posicion[1]] = "." # Posicion actual la reemplaza
+    tablero[nueva_fila][nueva_columna] = simbolo # Pone el simbolo en la nueva posicion del tablero
+
+    # Retorna ese valor
+    return (nueva_fila, nueva_columna)
+
+
+
 if __name__ == "__main__":
 
     # Bienvenida
@@ -36,6 +69,7 @@ if __name__ == "__main__":
         print("El tablero debe ser de minimo 10x10")
 
 
+
     # CREACION DEL TABLERO
                 #Creacion de columnas y filas del tablero (Divido en 2 partes Interna/Externa)
     tablero = [["." for _ in range(columnas)] for _ in range(filas)]
@@ -45,6 +79,7 @@ if __name__ == "__main__":
                     # ["." for in range(columnas)] Genera una lista de "." repetido tantas veces como columnas hayamos indicado para el tablero
                     # Parte externa (Segundo corchete): ( Esta parte crea las Filas del tablero (La linea horizontal))
                     # [for _ in range (filas)] “Haz tantas filas (Replicando la lista de columnas) como numero de filas le hayas indicado al tablero”.
+
 
 
     # CREACION DE MUROS Y PAREDES
@@ -121,8 +156,8 @@ if __name__ == "__main__":
         cueva = (filas - 2, columnas - 2)
         tablero[cueva[0]][cueva[1]] = "🏠"
 
-    # INTRODUCION DEL GATO Y RATON AL TABLERO
 
+    # INTRODUCION DEL GATO Y RATON AL TABLERO
 
             # Fila Y            # Columna X
     tablero[posicion_raton[0]] [posicion_raton[1]] = "🐭"
@@ -134,3 +169,21 @@ if __name__ == "__main__":
 
     print("TABLERO INICIAL")
     imprimir_tablero(tablero) # Llamamos/Inciamos la funcion para mostrar el tablero en la consola
+
+
+
+    # MOVIMIENTOS DE LOS JUGADORES
+
+    # Diccionario Delta con los movimientos de los jugadores (Delta = cambio/diferencia)
+    diccionario_movimientos = {
+    # tecla| (Y  ; X) |movimienot a realizar|
+        "w": (-1,  0), # Arriba
+        "s": (1 ,  0), # Abajo
+        "a": (0 , -1), # Izquierda
+        "d": (0 ,  1), # Derecha
+        "q": (-1, -1), # Arriba izquierda
+        "e": (-1,  1), # Arriba derecha
+        "z": (1,  -1), # Abajo izquierda
+        "c": (1,   1), # Abajo derecha
+
+    }
