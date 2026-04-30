@@ -283,6 +283,69 @@ def prueba_compleja(tablero, posicion_raton, posicion_gato, cueva):
 
 
 
+# Funcion : FUNCION PARA CONTROLAR MANUALMENTE A UN JUGADOR
+
+
+def jugador_manual(tablero, posicion, simbolo):
+
+    # INDICACIONES DE MOVIMIENTOS PARA LA PERSONA QUE JUEGUE
+    print("Seleccione su movimiento")
+    print("Lea las instrucciones con atencion")
+    print("W. Arriba, S. abajo. A. Izquierda. D. Derecha")
+    print("Q. Arriba izquierda, E. Arriba derecha, Z. Abajo izquierda, C. Abajo Derecha")
+    
+    while True: # Blucle permanente hasta que el jugador haga un movimiento valido
+
+        tecla         = input("Eliga su direccion").lower()  # Pedimos la tecla del movimineto
+        direccion     = diccionario_movimientos.get( tecla ) # Buscamos en el diccionario el valor de la llave abierta con la tecla
+        
+        # Validar si la tecla es valida
+        if not direccion: # "Si la tecla no corresponde con una clave del diccionrio"
+            print("Tecla no valida, inserte una tecla valida")
+            continue #  Volvemos a reiniciar hasta tener un movimieno valido
+
+        # Se obtiene la nueva posicion, sumando la posicion actual mas el moviento a realizar
+        nueva_fila    = posicion[0] + direccion[0]
+        nueva_columna = posicion[1] + direccion[1]
+
+        # Obtenemos el símbolo en el destino
+        simbolo_en_destino = tablero[nueva_fila][nueva_columna]
+
+        # Vamos a darle el valor falso a el movimiento para analizarlo
+        movimiento_valido = False
+
+        # Validamos si la posicion esta vacia y es valida
+        if simbolo == "🐭": # "Si el movimiento es del raton"
+            # El ratón puede moverse a un espacio vacío o a la cueva
+            if simbolo_en_destino == "." or simbolo_en_destino == "🏠":
+                movimiento_valido = True
+            else: # SI no es un movimiento valdido...
+                print("El ratón no puede moverse a esa posición. Hay un muro o el gato.")
+        
+        # Si el jugador es el gato...
+        elif simbolo == "🐱":
+            # El gato puede moverse a un espacio vacío o al ratón.
+            if simbolo_en_destino == "." or simbolo_en_destino == "🐭":
+                movimiento_valido = True
+            else: # Si no es un movimiento valido...
+                print("El gato no puede moverse a esa posición. Hay un muro o la cueva.")
+
+        if movimiento_valido:
+            break
+        else:
+            print("Hay un muro o obstaculo bloqueando esa direccion")
+    
+    
+    limpiar_la_consola()                         # Limpiamos la consola para que se vea facha
+    tablero[posicion[0]][posicion[1]] = "."      # Reescribimos la posicion anterios
+    tablero[nueva_fila][nueva_columna] = simbolo # Colocamos al jugador
+    imprimir_tablero(tablero)                    # Imprimimos el tablero actualizado
+    time.sleep(0.2)                              # Mini pausa para mejorar como se ve el programa
+
+    return (nueva_fila, nueva_columna) # Devolvemos la nueva posicion
+
+
+
 if __name__ == "__main__":
 
     # Bienvenida
