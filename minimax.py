@@ -15,7 +15,7 @@ import time   # Nos permite trabajar con tiempo: fechas, horas, medir cuánto ta
 
 def limpiar_la_consola(): #Vamos a usar esta funcion para darle un toque estetico al juego mejor en la consola y que se pueda apreciar mejor
     # "os.system" nos permite interactuar con el sistema, osea poner codigo dentro del programa que se ejecute en la consola junto al programa
-    os.system("clear")
+    os.system("cls")
             #DATOS:
                 # "system" le dice al sistema operativo "ejecuta esto:"
                 # "clear" limpia la consola
@@ -220,7 +220,7 @@ def mover_jugador_ia(tablero, posicion_jugador, posicion_oponente, cueva, es_gat
 
 
 
-# Funcion 6: INICIA EL JUEGO CON LOS PERSONAJES SIENDO BOTS INTELIGENTES CON MINIMAX
+# Funcion : INICIA EL JUEGO CON LOS PERSONAJES SIENDO BOTS INTELIGENTES CON MINIMAX
 
 
 # Dentro de tu función de bucle de juego:
@@ -250,6 +250,36 @@ def prueba_con_ia(tablero, posicion_raton, posicion_gato, cueva, diccionario_mov
             # Lógica de victoria del gato
             break
 
+
+
+# Funcion : SIMULACION INFINITA DE TURNOS CON MOVIMIENTOS ALEATORIOS
+
+
+def prueba_compleja(tablero, posicion_raton, posicion_gato, cueva):
+
+    turno = 0
+    while True:
+        # Contador y impresor de turnos
+        print(f"Turno:{turno + 1}")
+        turno +=  1
+        
+        # Crea los movimientos del gato y raton, llamando a la funcion nuevo_movimiento (que seran aleatorios)
+        posicion_raton = nuevo_movimiento(tablero, posicion_raton, "🐭", diccionario_movimientos)
+        posicion_gato  = nuevo_movimiento(tablero, posicion_gato , "🐱", diccionario_movimientos )
+
+        # Se limpia e imprime el tablero y se crea una pequeña pausa en cada vuelta
+        limpiar_la_consola()
+        imprimir_tablero(tablero)
+        time.sleep(0.2)
+
+        # Condiciones de VICTORIA/DERROTA 
+        # Cuando se cumpla laguna se termina el bucle y acaba l prueba
+        if posicion_raton == cueva:
+            print("EL RATON LOGRO ESCAPAR DEL GATO VICTORIA")
+            break
+        elif posicion_raton == posicion_gato:
+            print("EL GATO ATRAPO AL RATON PERDISTE")
+            break
 
 
 
@@ -394,4 +424,6 @@ if __name__ == "__main__":
 
     }
 
-    prueba_con_ia(tablero, posicion_raton, posicion_gato, cueva, diccionario_movimientos)
+    #prueba_con_ia(tablero, posicion_raton, posicion_gato, cueva, diccionario_movimientos)
+
+    prueba_compleja(tablero, posicion_raton, posicion_gato, cueva)
