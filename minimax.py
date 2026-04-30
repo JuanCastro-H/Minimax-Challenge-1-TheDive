@@ -425,8 +425,6 @@ def prueba_compleja_manual_con_bot(tablero, posicion_raton, posicion_gato, cueva
 
 
 
-
-
 # ---------------------------------------------
 # BLOQUE PRINCIPAL DE INICIALIZACION DEL JUEGO
 # ---------------------------------------------
