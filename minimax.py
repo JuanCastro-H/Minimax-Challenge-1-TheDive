@@ -87,7 +87,7 @@ def evaluar_estado_simple(posicion_raton, posicion_gato, cueva):
 
 
 
-# Funcion 4: MINIMAX
+# Funcion : MINIMAX
 
 
 def minimax_simple(posicion_raton, posicion_gato, cueva, profundidad, es_turno_del_gato, diccionario_movimientos, tablero):
@@ -148,6 +148,61 @@ def minimax_simple(posicion_raton, posicion_gato, cueva, profundidad, es_turno_d
         return mejor_valor
 
 
+
+# Funcion : BOT DE PERSONAJE
+
+
+def mover_jugador_ia(tablero, posicion_jugador, posicion_oponente, cueva, es_gato, diccionario_movimientos):
+    """
+    Usa el algoritmo Minimax para encontrar el mejor movimiento.
+    `es_gato`: True si se mueve el gato, False si se mueve el ratón.
+    """
+    mejor_movimiento = None
+    
+    # Definimos el valor inicial para buscar.
+    if es_gato:
+        mejor_valor = float('inf')   # Gato (Min) quiere el valor más bajo
+        for movimiento in diccionario_movimientos.values():
+            nueva_posicion = (posicion_jugador[0] + movimiento[0], posicion_jugador[1] + movimiento[1])
+            
+            # Ignorar movimientos que choquen con un muro o la cueva.
+            if tablero[nueva_posicion[0]][nueva_posicion[1]] == "#" or nueva_posicion == cueva:
+                continue
+
+            # Simular el movimiento y obtener el valor Minimax
+            valor = minimax_simple(posicion_oponente, nueva_posicion, cueva, 2, False, diccionario_movimientos, tablero)
+            
+            if valor < mejor_valor:
+                mejor_valor = valor
+                mejor_movimiento = nueva_posicion
+    else: # Es el ratón
+        mejor_valor = float('-inf')  # Ratón (Max) quiere el valor más alto
+        for movimiento in diccionario_movimientos.values():
+            nueva_posicion = (posicion_jugador[0] + movimiento[0], posicion_jugador[1] + movimiento[1])
+            
+            # Ignorar movimientos que choquen con un muro o la posición del gato.
+            if tablero[nueva_posicion[0]][nueva_posicion[1]] == "#" or nueva_posicion == posicion_oponente:
+                continue
+
+            # Simular el movimiento y obtener el valor Minimax
+            valor = minimax_simple(nueva_posicion, posicion_oponente, cueva, 2, True, diccionario_movimientos, tablero)
+            
+            if valor > mejor_valor:
+                mejor_valor = valor
+                mejor_movimiento = nueva_posicion
+
+    # Si no hay un movimiento, el jugador se queda donde está.
+    if mejor_movimiento is None:
+        return posicion_jugador
+    
+    # Actualizamos el tablero con el mejor movimiento.
+    tablero[posicion_jugador[0]][posicion_jugador[1]] = "."
+    if es_gato:
+        tablero[mejor_movimiento[0]][mejor_movimiento[1]] = "🐱"
+    else:
+        tablero[mejor_movimiento[0]][mejor_movimiento[1]] = "🐭"
+    
+    return mejor_movimiento
 
 if __name__ == "__main__":
 
