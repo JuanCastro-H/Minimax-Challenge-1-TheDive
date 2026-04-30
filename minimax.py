@@ -1,12 +1,25 @@
 # IMPORTACIONES DE LIBRERIAS
 import random # Libreria basica de python para generar numeros aleatorios con un algoritmo
-
+import os     # Nos permite interactuar con el sistema operativo, gestionar archivos, carpetas y "ejecutar comandos del sistema" (que sera su principal uso en este programa)
+import time   # Nos permite trabajar con tiempo: fechas, horas, medir cuánto tarda algo, o simplemente "hacer pausas" (que sera su uso principal)
 
 #---------------------------------------------------
 
 # FUNCIONES PARA QUE EL PROGRAMA FUNCIONE
 
 #---------------------------------------------------
+
+
+
+# Funcion 1: LIMPIAR CONSOLA
+
+def limpiar_la_consola(): #Vamos a usar esta funcion para darle un toque estetico al juego mejor en la consola y que se pueda apreciar mejor
+    # "os.system" nos permite interactuar con el sistema, osea poner codigo dentro del programa que se ejecute en la consola junto al programa
+    os.system("clear")
+            #DATOS:
+                # "system" le dice al sistema operativo "ejecuta esto:"
+                # "clear" limpia la consola
+
 
 
 #---------------------------------------------
@@ -204,6 +217,42 @@ def mover_jugador_ia(tablero, posicion_jugador, posicion_oponente, cueva, es_gat
     
     return mejor_movimiento
 
+
+
+
+# Funcion 6: INICIA EL JUEGO CON LOS PERSONAJES SIENDO BOTS INTELIGENTES CON MINIMAX
+
+
+# Dentro de tu función de bucle de juego:
+def prueba_con_ia(tablero, posicion_raton, posicion_gato, cueva, diccionario_movimientos):
+    turno = 0
+    while True:
+        # Limpia la consola, imprime el tablero, imprime y suma el contador, y genera un pequeño retardo en el codigo entre ciclos
+        limpiar_la_consola()
+        imprimir_tablero(tablero)
+        print(f"Turno: {turno + 1}")
+        time.sleep(0.2)
+
+        # El ratón se mueve de forma inteligente
+        posicion_raton = mover_jugador_ia(tablero, posicion_raton, posicion_gato, cueva, False, diccionario_movimientos)
+        
+        # El gato se mueve de forma inteligente
+        posicion_gato = mover_jugador_ia(tablero, posicion_gato, posicion_raton, cueva, True, diccionario_movimientos)
+        
+        # Contador de turnos
+        turno += 1
+
+        # Condiciones de VICTORIA/DERROTA
+        if posicion_raton == cueva:
+            # Lógica de victoria del ratón
+            break
+        elif posicion_raton == posicion_gato:
+            # Lógica de victoria del gato
+            break
+
+
+
+
 if __name__ == "__main__":
 
     # Bienvenida
@@ -344,3 +393,5 @@ if __name__ == "__main__":
         "c": (1,   1), # Abajo derecha
 
     }
+
+    prueba_con_ia(tablero, posicion_raton, posicion_gato, cueva, diccionario_movimientos)
